@@ -1,0 +1,899 @@
+{
+  "metricas_globales": {
+    "total_preguntas": 15,
+    "tasa_tool_calling_correcto_pct": 100.0,
+    "tasa_citacion_verificada_pct": 100.0,
+    "tasa_cumplimiento_tmax_pct": 100.0,
+    "tasa_resiliencia_errores_pct": 100.0,
+    "tasa_exito_global_end_to_end_pct": 100.0,
+    "pasos_promedio": 2.87,
+    "latencia_promedio_seg": 6.26,
+    "backend_evaluado": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct"
+  },
+  "detalle_preguntas": [
+    {
+      "id": "Q01",
+      "categoria": "Consulta de Datos (Tool 1)",
+      "pregunta": "¿Cuál fue la concentración de PM2.5, el índice ICA y las condiciones meteorológicas en la estación Centro en la fecha 2024-03-01?",
+      "herramientas_esperadas": [
+        "get_air_quality_data"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 3,
+      "pasos_ejecutados": 3,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.65,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Centro (2024-03-01) - **Estación oficial:** Medellín Centro (Tráfico Centro - Museo de Antioquia) (*Tráfico Urbano*) - **Concentración $PM_{2.5}$ (24h):** **`51.22 µg/m³`** (máximo horario `69.0 µg/m³`, media móvil 7 días `41.92 µg/m³`), valor que **supera el límite diario nacional de ...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La concentración de PM2.5, el índice ICA y las condiciones meteorológicas en la estación Centro en la fecha 2024-03-01 fueron observadas durante el período de 2024-03-0",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Centro",
+            "fecha": "2024-03-01"
+          },
+          "observation": "{\"estacion\": \"Centro\", \"estacion_oficial\": \"Medellín Centro (Tráfico Centro - Museo de Antioquia)\", \"municipio\": \"Medellín\", \"tipo_estacion\": \"Tráfico Urbano\", \"fecha\": \"2024-03-01\", \"pm25_24h_ugm3\": 51.22, \"pm25_max_horario_ugm3\": 69.0, \"pm25_previo_ugm3\": 50.65, \"media_movil_7d_ugm3\": 41.92, \"ica\": 138.8, \"categoria_ica\": \"Dañina a Grupos Sensibles\", \"color_ica\": \"Naranja\", \"temperatura_c\": 21.93, \"humedad_relativa_pct\": 71.1, \"velocidad_viento_ms\": 0.69, \"precipitacion_mm\": 0.0, \"periodo_estacional\": \"Gestión Episodios (POECA)\", \"supera_norma_diaria_37ugm3\": true, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Medellín Centro (Tráfico Centro - Museo de Antioquia), Fecha 2024-03-01]\"}",
+          "is_error": false,
+          "latency_ms": 4624.1
+        },
+        {
+          "step": 2,
+          "thought": "Dado que se observan concentraciones elevadas de PM2.5, encadeno consulta al protocolo POECA para brindar medidas preventivas precisas.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "medidas Estado de Prevención y Alerta POECA grupos sensibles PM2.5",
+            "top_k": 2
+          },
+          "observation": "{\"consulta\": \"medidas Estado de Prevención y Alerta POECA grupos sensibles PM2.5\", \"fragmentos_recuperados\": 2, \"resultados\": [{\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.5832, \"score_hibrido\": 0.6199}, {\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.5805, \"score_hibrido\": 0.5628}], \"citas_obligatorias\": [\"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\"]}",
+          "is_error": false,
+          "latency_ms": 22.9
+        },
+        {
+          "step": 3,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "categoria": "Consulta de Datos (Tool 1)",
+      "pregunta": "Consulta cómo está actualmente la calidad del aire y la humedad relativa en la estación El Poblado.",
+      "herramientas_esperadas": [
+        "get_air_quality_data"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 1,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.48,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación El Poblado (2025-12-31) - **Estación oficial:** El Poblado (I.E. José Félix de Restrepo - Suroriente) (*Representatividad Poblacional (Residencial)*) - **Concentración $PM_{2.5}$ (24h):** **`16.5 µg/m³`** (máximo horario `28.79 µg/m³`, media móvil 7 días `16.58 µg/m³`), valor que **cum...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La herramienta \"get_air_quality_data\" me permite obtener información sobre la calidad del aire y la humedad relativa en la estación El Poblado, lo que es crucial para evaluar el estado de los ecosistemas y la salud pública en este área",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "El Poblado",
+            "fecha": null
+          },
+          "observation": "{\"estacion\": \"El Poblado\", \"estacion_oficial\": \"El Poblado (I.E. José Félix de Restrepo - Suroriente)\", \"municipio\": \"Medellín\", \"tipo_estacion\": \"Representatividad Poblacional (Residencial)\", \"fecha\": \"2025-12-31\", \"pm25_24h_ugm3\": 16.5, \"pm25_max_horario_ugm3\": 28.79, \"pm25_previo_ugm3\": 15.45, \"media_movil_7d_ugm3\": 16.58, \"ica\": 59.7, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 20.89, \"humedad_relativa_pct\": 73.07, \"velocidad_viento_ms\": 0.88, \"precipitacion_mm\": 0.0, \"periodo_estacional\": \"Periodo Regular\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación El Poblado (I.E. José Félix de Restrepo - Suroriente), Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 4480.2
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "categoria": "Consulta de Datos Regional (Tool 1)",
+      "pregunta": "Compara todas las estaciones del Valle de Aburrá en la fecha 2024-03-18 e indica cuál fue la estación más crítica.",
+      "herramientas_esperadas": [
+        "get_air_quality_data"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 1,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 18.23,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📊 Panorama de Calidad del Aire en el Valle de Aburrá (2024-03-18) - **Promedio regional $PM_{2.5}$:** `29.39 µg/m³` | **Estación con mayor concentración:** **Centro**.   - **Centro** (Medellín): `$PM_{2.5}$ = 36.83 µg/m³` | ICA **99.6** — *Aceptable* (**Amarillo**) | Viento `1.2 m/s`, Humedad `66.33%`.   - **Itagüí...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La estación más crítica en el Valle de Aburrá en la fecha 2024-03-18 es la Estación de Corrientes, ya que tuvo los datos más altos y bajos durante ese día.",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "todas",
+            "fecha": "2024-03-18"
+          },
+          "observation": "{\"modo_consulta\": \"Resumen Regional Valle de Aburrá (5 estaciones)\", \"fecha\": \"2024-03-18\", \"estaciones\": [{\"estacion\": \"Centro\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 36.83, \"ica\": 99.6, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 1.2, \"humedad_pct\": 66.33, \"temperatura_c\": 23.98}, {\"estacion\": \"Itagüí\", \"municipio\": \"Itagüí\", \"pm25_ugm3\": 31.83, \"ica\": 89.8, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 0.85, \"humedad_pct\": 48.97, \"temperatura_c\": 26.37}, {\"estacion\": \"Aranjuez\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 28.15, \"ica\": 82.5, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 3.8, \"humedad_pct\": 52.75, \"temperatura_c\": 28.27}, {\"estacion\": \"Bello\", \"municipio\": \"Bello\", \"pm25_ugm3\": 26.73, \"ica\": 79.7, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 1.56, \"humedad_pct\": 54.04, \"temperatura_c\": 25.63}, {\"estacion\": \"El Poblado\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 23.4, \"ica\": 73.2, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 0.98, \"humedad_pct\": 68.42, \"temperatura_c\": 21.7}], \"estacion_mas_critica\": \"Centro\", \"pm25_promedio_valle\": 29.39, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Resumen Regional Valle de Aburrá, Fecha 2024-03-18]\"}",
+          "is_error": false,
+          "latency_ms": 18226.5
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "categoria": "Predicción Modelo Clásico (Tool 2)",
+      "pregunta": "Predice la categoría de calidad del aire para mañana en Itagüí si tenemos viento de 0.5 m/s, humedad de 82% y un PM2.5 previo de 41.5 ug/m3.",
+      "herramientas_esperadas": [
+        "predict_air_quality"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 4,
+      "pasos_ejecutados": 4,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 7.25,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Itagüí (2025-12-31) - **Estación oficial:** Itagüí (Casa de Justicia - Corredor Sur Industrial) (*Representatividad Poblacional / Industrial-Urbana*) - **Concentración $PM_{2.5}$ (24h):** **`19.13 µg/m³`** (máximo horario `31.0 µg/m³`, media móvil 7 días `17.83 µg/m³`), valor que **cum...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La categoría de calidad del aire para mañana en Itagüí es de alta calidad debido a los datos proporcionados. El viento de 0.5 m/s indica que el aire está bien ventilado, la humedad de 82% es normal, y",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Itagüí",
+            "fecha": null
+          },
+          "observation": "{\"estacion\": \"Itagüí\", \"estacion_oficial\": \"Itagüí (Casa de Justicia - Corredor Sur Industrial)\", \"municipio\": \"Itagüí\", \"tipo_estacion\": \"Representatividad Poblacional / Industrial-Urbana\", \"fecha\": \"2025-12-31\", \"pm25_24h_ugm3\": 19.13, \"pm25_max_horario_ugm3\": 31.0, \"pm25_previo_ugm3\": 15.19, \"media_movil_7d_ugm3\": 17.83, \"ica\": 64.8, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 23.51, \"humedad_relativa_pct\": 63.82, \"velocidad_viento_ms\": 0.88, \"precipitacion_mm\": 0.04, \"periodo_estacional\": \"Periodo Regular\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Itagüí (Casa de Justicia - Corredor Sur Industrial), Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 6796.4
+        },
+        {
+          "step": 2,
+          "thought": "Ejecutando el modelo probabilístico clásico Gaussian HMM + Filtro Bayesiano para pronosticar el estado ICA del día siguiente.",
+          "action": "predict_air_quality",
+          "action_input": {
+            "estacion": "Itagüí",
+            "viento": 0.5,
+            "humedad": 82.0,
+            "pm25_previo": 41.5,
+            "temperatura": 23.51,
+            "precipitacion": 0.0
+          },
+          "observation": "{\"estacion\": \"Itagüí\", \"modelo\": \"Gaussian HMM + Filtro Bayesiano Dinámico (Implementación Propia en NumPy)\", \"categoria_predicha\": \"Dañina a Grupos Sensibles\", \"color_ica_predicho\": \"Naranja\", \"nivel_poeca_asociado\": \"Estado de Prevención POECA (Nivel I - Grupos Sensibles)\", \"confianza\": 0.8852, \"pm25_estimado_ugm3\": 44.5, \"probabilidades_por_estado\": {\"Buena (Verde)\": 0.0002, \"Aceptable (Amarillo)\": 0.1139, \"Dañina a Grupos Sensibles (Naranja)\": 0.8852, \"Dañina a la Salud (Rojo)\": 0.0007}, \"parametros_entrada\": {\"viento_ms\": 0.5, \"humedad_pct\": 82.0, \"pm25_previo_ugm3\": 41.5, \"temperatura_c\": 23.51, \"precipitacion_mm\": 0.0}, \"fuente_modelo\": \"Modelo Probabilístico Parte 1 entrenado con histórico SISAIRE-AMVA (2024)\", \"fuente\": \"[Fuente: Modelo Probabilístico Clásico Propio — Gaussian HMM + Filtro Bayesiano (Parte 1, NumPy), entrenado con histórico SISAIRE-AMVA para Estación Itagüí]\"}",
+          "is_error": false,
+          "latency_ms": 1.6
+        },
+        {
+          "step": 3,
+          "thought": "El pronóstico proyecta deterioro a nivel Naranja/Rojo; consultando el protocolo POECA para detallar medidas aplicables.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "medidas obligatorias Estado de Prevención POECA (Nivel I - Grupos Sensibles) POECA salud movilidad",
+            "top_k": 2
+          },
+          "observation": "{\"consulta\": \"medidas obligatorias Estado de Prevención POECA (Nivel I - Grupos Sensibles) POECA salud movilidad\", \"fragmentos_recuperados\": 2, \"resultados\": [{\"chunk_id\": \"SIATA-SALUD-ICA-2024_016\", \"documento\": \"Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA\", \"doc_code\": \"SIATA-SALUD-ICA-2024\", \"seccion\": \"Disposiciones Generales\", \"contenido\": \"**Entidades de Referencia:** SIATA, Área Metropolitana del Valle de Aburrá (AMVA), Secretaría de Salud de Medellín e Instituto Nacional de Salud (INS)\", \"cita\": \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Disposiciones Generales]\", \"score_semantico\": 0.6087, \"score_hibrido\": 0.5408}, {\"chunk_id\": \"SIATA-SALUD-ICA-2024_022\", \"documento\": \"Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA\", \"doc_code\": \"SIATA-SALUD-ICA-2024\", \"seccion\": \"Sección 3. Recomendaciones Ciudadanas y Deportivas por Color del ICA — 3.4. ICA Rojo — Dañina a la Salud ($55.5\\\\text{ – }150.4\\\\ \\\\mu g/m^3$, ICA 151–200)\", \"contenido\": \"- **Grupos sensibles:** **Permanecer en ambientes interiores** tanto como sea posible; cancelar toda actividad física al aire libre. Uso recomendado de mascarilla **N95 / KN95** al salir al exterior.\\n- **Población general:** **Reprogramar o trasladar a recintos cerrados** las actividades deportivas intensas (fútbol, trote, cicloviás, entrenamientos escolares). Evitar transitar a pie o en bicicleta junto a ejes de transporte pesado.\\n- **Manejo del hogar y oficinas:** Mantener ventanas cerradas durante las horas pico de la mañana (05:30–10:00 a. m.) y noche; si se requiere ventilar la vivienda, hacerlo preferiblemente entre las **12:00 m. y las 03:30 p. m.**, cuando la radiación solar eleva la capa límite atmosférica y reduce temporalmente las concentraciones superficiales. Limpiar superficies con paño húmedo (evitar barrer en seco para no resuspender polvo).\", \"cita\": \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 3. Recomendaciones Ciudadanas y Deportivas por Color del ICA — 3.4. ICA Rojo — Dañina a la Salud ($55.5\\\\text{ – }150.4\\\\ \\\\mu g/m^3$, ICA 151–200)]\", \"score_semantico\": 0.5696, \"score_hibrido\": 0.5103}], \"citas_obligatorias\": [\"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Disposiciones Generales]\", \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 3. Recomendaciones Ciudadanas y Deportivas por Color del ICA — 3.4. ICA Rojo — Dañina a la Salud ($55.5\\\\text{ – }150.4\\\\ \\\\mu g/m^3$, ICA 151–200)]\"]}",
+          "is_error": false,
+          "latency_ms": 450.6
+        },
+        {
+          "step": 4,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q05",
+      "categoria": "Predicción Modelo Clásico (Tool 2)",
+      "pregunta": "Usando el modelo clásico, pronostica el estado ICA de mañana en Bello con viento de 2.8 m/s, humedad de 48% y concentración de PM2.5 de 10.5 ug/m3.",
+      "herramientas_esperadas": [
+        "predict_air_quality"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "predict_air_quality"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 2,
+      "pasos_ejecutados": 3,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 11.14,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Bello (2025-12-31) - **Estación oficial:** Bello (Liceo Fernando Vélez - Corredor Norte) (*Representatividad Poblacional (Urbana Norte)*) - **Concentración $PM_{2.5}$ (24h):** **`20.47 µg/m³`** (máximo horario `70.13 µg/m³`, media móvil 7 días `13.76 µg/m³`), valor que **cumple el lími...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "En Bello, durante la mañana, con viento de 2.8 m/s, humedad de 48%, y concentración de PM2.5 de 10.5 ug/m³, se espera que el estado ICA sea de nivel bajo",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Bello",
+            "fecha": null
+          },
+          "observation": "{\"estacion\": \"Bello\", \"estacion_oficial\": \"Bello (Liceo Fernando Vélez - Corredor Norte)\", \"municipio\": \"Bello\", \"tipo_estacion\": \"Representatividad Poblacional (Urbana Norte)\", \"fecha\": \"2025-12-31\", \"pm25_24h_ugm3\": 20.47, \"pm25_max_horario_ugm3\": 70.13, \"pm25_previo_ugm3\": 15.67, \"media_movil_7d_ugm3\": 13.76, \"ica\": 67.5, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 22.41, \"humedad_relativa_pct\": 73.72, \"velocidad_viento_ms\": 0.97, \"precipitacion_mm\": 0.02, \"periodo_estacional\": \"Periodo Regular\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Bello (Liceo Fernando Vélez - Corredor Norte), Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 11134.1
+        },
+        {
+          "step": 2,
+          "thought": "Ejecutando el modelo probabilístico clásico Gaussian HMM + Filtro Bayesiano para pronosticar el estado ICA del día siguiente.",
+          "action": "predict_air_quality",
+          "action_input": {
+            "estacion": "Bello",
+            "viento": 2.8,
+            "humedad": 48.0,
+            "pm25_previo": 2.5,
+            "temperatura": 22.41,
+            "precipitacion": 0.0
+          },
+          "observation": "{\"estacion\": \"Bello\", \"modelo\": \"Gaussian HMM + Filtro Bayesiano Dinámico (Implementación Propia en NumPy)\", \"categoria_predicha\": \"Buena\", \"color_ica_predicho\": \"Verde\", \"nivel_poeca_asociado\": \"Nivel Normal (Vigilancia Continua)\", \"confianza\": 0.5559, \"pm25_estimado_ugm3\": 2.0, \"probabilidades_por_estado\": {\"Buena (Verde)\": 0.5559, \"Aceptable (Amarillo)\": 0.4421, \"Dañina a Grupos Sensibles (Naranja)\": 0.0003, \"Dañina a la Salud (Rojo)\": 0.0017}, \"parametros_entrada\": {\"viento_ms\": 2.8, \"humedad_pct\": 48.0, \"pm25_previo_ugm3\": 2.5, \"temperatura_c\": 22.41, \"precipitacion_mm\": 0.0}, \"fuente_modelo\": \"Modelo Probabilístico Parte 1 entrenado con histórico SISAIRE-AMVA (2024)\", \"fuente\": \"[Fuente: Modelo Probabilístico Clásico Propio — Gaussian HMM + Filtro Bayesiano (Parte 1, NumPy), entrenado con histórico SISAIRE-AMVA para Estación Bello]\"}",
+          "is_error": false,
+          "latency_ms": 0.8
+        },
+        {
+          "step": 3,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q06",
+      "categoria": "Predicción Modelo Clásico (Tool 2)",
+      "pregunta": "Simula qué probabilidad de alerta hay mañana en Aranjuez con viento de 0.9 m/s, humedad de 75% y PM2.5 previo de 36.0 ug/m3.",
+      "herramientas_esperadas": [
+        "predict_air_quality"
+      ],
+      "herramientas_invocadas": [
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 4,
+      "pasos_ejecutados": 3,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 5.35,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 🎯 Pronóstico Probabilístico para el Día Siguiente (Aranjuez) - **Escenario evaluado:** Viento `0.9 m/s`, Humedad `75.0%`, $PM_{2.5}$ previo `36.0 µg/m³`, Temperatura `22.5 °C`. - **Categoría ICA predicha ($t+1$):** **Dañina a Grupos Sensibles** (Color **Naranja**, confianza posterior **`63.1%`**, $PM_{2.5}$ estimad...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "El agente Ambiental ReAct está programado para simular las probabilidades de alta calidad del aire en Aranjuez durante el día, considerando los parámetros proporcionados. En este caso, el viento es de 0.9 m/s, la",
+          "action": "predict_air_quality",
+          "action_input": {
+            "estacion": "Aranjuez",
+            "viento": 0.9,
+            "humedad": 75.0,
+            "pm25_previo": 36.0,
+            "temperatura": 22.5,
+            "precipitacion": 0.0
+          },
+          "observation": "{\"estacion\": \"Aranjuez\", \"modelo\": \"Gaussian HMM + Filtro Bayesiano Dinámico (Implementación Propia en NumPy)\", \"categoria_predicha\": \"Dañina a Grupos Sensibles\", \"color_ica_predicho\": \"Naranja\", \"nivel_poeca_asociado\": \"Estado de Prevención POECA (Nivel I - Grupos Sensibles)\", \"confianza\": 0.6306, \"pm25_estimado_ugm3\": 42.5, \"probabilidades_por_estado\": {\"Buena (Verde)\": 0.0005, \"Aceptable (Amarillo)\": 0.3681, \"Dañina a Grupos Sensibles (Naranja)\": 0.6306, \"Dañina a la Salud (Rojo)\": 0.0008}, \"parametros_entrada\": {\"viento_ms\": 0.9, \"humedad_pct\": 75.0, \"pm25_previo_ugm3\": 36.0, \"temperatura_c\": 22.5, \"precipitacion_mm\": 0.0}, \"fuente_modelo\": \"Modelo Probabilístico Parte 1 entrenado con histórico SISAIRE-AMVA (2024)\", \"fuente\": \"[Fuente: Modelo Probabilístico Clásico Propio — Gaussian HMM + Filtro Bayesiano (Parte 1, NumPy), entrenado con histórico SISAIRE-AMVA para Estación Aranjuez]\"}",
+          "is_error": false,
+          "latency_ms": 5276.6
+        },
+        {
+          "step": 2,
+          "thought": "Buscando en el índice vectorial FAISS los artículos aplicables del Protocolo POECA, Resolución 2254 y guías de salud.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Simula qué probabilidad de alerta hay mañana en Aranjuez con viento de 0.9 m/s, humedad de 75% y PM2.5 previo de 36.0 ug/m3.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Simula qué probabilidad de alerta hay mañana en Aranjuez con viento de 0.9 m/s, humedad de 75% y PM2.5 previo de 36.0 ug/m3.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"SIATA-METEO-RED-2025_028\", \"documento\": \"Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá\", \"doc_code\": \"SIATA-METEO-RED-2025\", \"seccion\": \"Sección 2. Relaciones Físicas entre Variables Meteorológicas y $PM_{2.5}$\", \"contenido\": \"1. **Velocidad del Viento ($VViento$, $m/s$):** Mantiene una **relación inversa** con la concentración de $PM_{2.5}$. Vientos débiles o calmas atmosféricas ($< 1.0\\\\ m/s$) favorecen el estancamiento y acumulación local de aerosoles; vientos sostenidos ($> 2.0\\\\ m/s$, canalizados predominantemente de Norte a Sur a lo largo del eje Barbosa–Bello–Medellín–Itagüí) promueven la ventilación y dispersión horizontal.\\n2. **Humedad Relativa ($HAire2$, %) y Temperatura ($TAire2$, °C):** Altas humedades relativas ($> 75\\\\%$) combinadas con temperaturas moderadas/bajas y baja radiación solar están fuertemente asociadas a días nublados con inversión térmica persistente y favorecen el **crecimiento higroscópico** y la formación de aerosoles inorgánicos secundarios (nitratos y sulfatos de amonio a partir de precursores gaseosos $NO_x$ y $SO_2$).\\n3. **Precipitación ($PLiquida$, $mm$):** Su efecto depende de la intensidad y la hora:\\n   - **Lluvias convectivas intensas nocturnas ($> 10\\\\ mm$):** Producen **lavado atmosférico efectivo (*wet scavenging*)**, arrastrando el material particulado hacia la superficie y reduciendo el $PM_{2.5}$ de la mañana siguiente.\\n   - **Lloviznas débiles diurnas ($< 3\\\\ mm$) con cielo cubierto:** Pueden empeorar paradójicamente la acumulación al incrementar la humedad relativa y suprimir el calentamiento solar sin lograr barrido húmedo suficiente.\\n4. **Inercia Temporal ($PM_{2.5, t-1}$):** Debido a la topografía semicerrada, las concentraciones de $PM_{2.5}$ exhiben alta **autocorrelación de primer orden** entre días consecutivos, justificando el modelado probabilístico secuencial (Modelos Ocultos de Markov — HMM y clasificadores bayesianos con rezagos temporales).\", \"cita\": \"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Sección 2. Relaciones Físicas entre Variables Meteorológicas y $PM_{2.5}$]\", \"score_semantico\": 0.482, \"score_hibrido\": 0.4346}, {\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.4923, \"score_hibrido\": 0.428}, {\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.4899, \"score_hibrido\": 0.4114}], \"citas_obligatorias\": [\"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Sección 2. Relaciones Físicas entre Variables Meteorológicas y $PM_{2.5}$]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\"]}",
+          "is_error": false,
+          "latency_ms": 71.1
+        },
+        {
+          "step": 3,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "categoria": "Normativa RAG POECA (Tool 3)",
+      "pregunta": "¿Cuándo se declara el Estado de Alerta (Nivel II - Rojo) en el protocolo POECA y qué restricciones aplican al Pico y Placa y a los camiones de carga?",
+      "herramientas_esperadas": [
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 3,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.7,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📜 Marco Normativo POECA y Recomendaciones Técnicas  **1. Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA — Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)** - **Criterio Técnico de Declaratoria:** Se declara...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "El Estado de Alerta (Nivel II - Rojo) en el Protocolo POECA se declaró el 15 de octubre de 2023, con restricciones específicas para el Pico y Placa y los camiones de",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "¿Cuándo se declara el Estado de Alerta (Nivel II - Rojo) en el protocolo POECA y qué restricciones aplican al Pico y Placa y a los camiones de carga?",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"¿Cuándo se declara el Estado de Alerta (Nivel II - Rojo) en el protocolo POECA y qué restricciones aplican al Pico y Placa y a los camiones de carga?\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.5748, \"score_hibrido\": 0.6409}, {\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.5639, \"score_hibrido\": 0.5773}, {\"chunk_id\": \"AMVA-POECA-2018-2019_009\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 11. Criterio de Levantamiento del Estado Excepcional\", \"contenido\": \"Para disminuir de nivel o levantar un Estado de Prevención, Alerta o Emergencia, el informe técnico del SIATA deberá certificar que más del **50% de las estaciones poblacionales** han retornado a concentraciones inferiores al umbral respectivo durante al menos **48 horas continuas** y que los modelos meteorológicos de mesoescala pronostican condiciones favorables de radiación solar y ventilación en las siguientes 48 horas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 11. Criterio de Levantamiento del Estado Excepcional]\", \"score_semantico\": 0.5988, \"score_hibrido\": 0.5633}], \"citas_obligatorias\": [\"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 11. Criterio de Levantamiento del Estado Excepcional]\"]}",
+          "is_error": false,
+          "latency_ms": 4695.3
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "categoria": "Normativa RAG Resolución 2254 (Tool 3)",
+      "pregunta": "¿Cuál es el límite máximo permisible diario de PM2.5 en Colombia y cuáles son los puntos de corte del ICA según la Resolución 2254 de 2017?",
+      "herramientas_esperadas": [
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 3,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.62,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📜 Marco Normativo POECA y Recomendaciones Técnicas  **1. Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia — Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)** La Resolución 2254 de 2017 adopta la norma nacional de calidad del aire ambiente para proteger la s...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "El límite máximo diario de PM2.5 en Colombia es de 6 microg per metro cúbico, y los puntos de corte del ICA (Instituto Colombiano de la Acción Ambiental) se encuentran en Bogotá,",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "¿Cuál es el límite máximo permisible diario de PM2.5 en Colombia y cuáles son los puntos de corte del ICA según la Resolución 2254 de 2017?",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"¿Cuál es el límite máximo permisible diario de PM2.5 en Colombia y cuáles son los puntos de corte del ICA según la Resolución 2254 de 2017?\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"MADS-RES-2254-2017_011\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)\", \"contenido\": \"La Resolución 2254 de 2017 adopta la norma nacional de calidad del aire ambiente para proteger la salud humana y el bienestar de la población colombiana. Para el material particulado fino **$PM_{2.5}$** (partículas con diámetro aerodinámico menor o igual a $2.5\\\\ \\\\mu m$), los límites máximos permisibles vigentes son:\\n- **Tiempo de exposición de 24 horas (promedio diario):** **$37\\\\ \\\\mu g/m^3$** (vigente desde 2018). Nota técnica: El artículo 3 proyecta una meta normativa más estricta de $25\\\\ \\\\mu g/m^3$ en el horizonte de convergencia hacia las Guías de Calidad del Aire de la OMS.\\n- **Tiempo de exposición anual (promedio aritmético anual):** **$25\\\\ \\\\mu g/m^3$** (con meta objetivo de **$15\\\\ \\\\mu g/m^3$** en el marco del PIGECA y lineamientos nacionales).\\n- Para material particulado respirable **$PM_{10}$**: máximo permisible diario (24 horas) de **$75\\\\ \\\\mu g/m^3$** y anual de **$50\\\\ \\\\mu g/m^3$**.\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)]\", \"score_semantico\": 0.7295, \"score_hibrido\": 0.7035}, {\"chunk_id\": \"MADS-RES-2254-2017_014\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21) — Tabla 6 (Artículo 20). Puntos de Corte del ICA para $PM_{2.5}$ (Promedio 24 Horas)\", \"contenido\": \"| Categoría ICA | Color Oficial | Rango ICA ($I_{Lo}$ – $I_{Hi}$) | Concentración $PM_{2.5}$ 24h ($BP_{Lo}$ – $BP_{Hi}$, $\\\\mu g/m^3$) | Significado Regulatorio |\\n| :--- | :--- | :---: | :---: | :--- |\\n| **Buena** | **Verde** | 0 – 50 | $0.0\\\\text{ – }12.0$ | La contaminación atmosférica supone un riesgo bajo o nulo para la salud. |\\n| **Aceptable** | **Amarillo** | 51 – 100 | $12.1\\\\text{ – }37.0$ | Cumple el límite diario nacional ($37\\\\ \\\\mu g/m^3$). Posibles síntomas leves solo en individuos extremadamente sensibles. |\\n| **Dañina a la Salud de Grupos Sensibles** | **Naranja** | 101 – 150 | $37.1\\\\text{ – }55.4$ | Excede la norma diaria nacional. Riesgo incrementado para niños, adultos mayores, gestantes y pacientes cardiorrespiratorios. Umbral de **Prevención POECA**. |\\n| **Dañina a la Salud** | **Rojo** | 151 – 200 | $55.5\\\\text{ – }150.4$ | Todos los individuos pueden comenzar a experimentar efectos en la salud; los grupos sensibles pueden sufrir efectos graves. Umbral de **Alerta POECA**. |\\n| **Muy Dañina a la Salud** | **Púrpura** | 201 – 300 | $150.5\\\\text{ – }250.4$ | Estado de alerta sanitaria de emergencia; toda la población tiene alta probabilidad de verse severamente afectada. Umbral de **Emergencia POECA**. |\\n| **Peligrosa** | **Marrón** | 301 – 500 | $250.5\\\\text{ – }500.4$ | Condición crítica extrema con riesgo agudo severo para toda la población expuesta. |\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21) — Tabla 6 (Artículo 20). Puntos de Corte del ICA para $PM_{2.5}$ (Promedio 24 Horas)]\", \"score_semantico\": 0.6584, \"score_hibrido\": 0.648}, {\"chunk_id\": \"MADS-RES-2254-2017_010\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Disposiciones Generales\", \"contenido\": \"**Entidad Emisora:** Ministerio de Ambiente y Desarrollo Sostenible (MADS) — República de Colombia  \\n**Vigencia:** A partir del 1 de enero de 2018 (con metas intermedias a 2030)\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Disposiciones Generales]\", \"score_semantico\": 0.7322, \"score_hibrido\": 0.6445}], \"citas_obligatorias\": [\"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)]\", \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21) — Tabla 6 (Artículo 20). Puntos de Corte del ICA para $PM_{2.5}$ (Promedio 24 Horas)]\", \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Disposiciones Generales]\"]}",
+          "is_error": false,
+          "latency_ms": 4619.2
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "categoria": "Salud Pública RAG (Tool 3)",
+      "pregunta": "¿Quiénes conforman los grupos sensibles ante episodios de PM2.5 y qué tipo de mascarilla o tapabocas se recomienda usar en niveles Naranja y Rojo?",
+      "herramientas_esperadas": [
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 3,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.64,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📜 Marco Normativo POECA y Recomendaciones Técnicas  **1. Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA — Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)** - **Criterio Técnico de Declaratoria:** Se d...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "En Medellín, los grupos sensibles al PM2.5 incluyen personas mayores de 60 años, niños menores de 18 años y personas con discapacidades físicas. Para mascarillas o tapabocas en niveles N",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "¿Quiénes conforman los grupos sensibles ante episodios de PM2.5 y qué tipo de mascarilla o tapabocas se recomienda usar en niveles Naranja y Rojo?",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"¿Quiénes conforman los grupos sensibles ante episodios de PM2.5 y qué tipo de mascarilla o tapabocas se recomienda usar en niveles Naranja y Rojo?\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.4625, \"score_hibrido\": 0.4384}, {\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.4269, \"score_hibrido\": 0.4236}, {\"chunk_id\": \"SIATA-SALUD-ICA-2024_018\", \"documento\": \"Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA\", \"doc_code\": \"SIATA-SALUD-ICA-2024\", \"seccion\": \"Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)\", \"contenido\": \"Según los lineamientos de salud ambiental del AMVA, SIATA y el Ministerio de Salud, se consideran **Grupos Sensibles** ante episodios de contaminación por $PM_{2.5}$:\\n1. **Niños y niñas menores de 5 años** (debido a su mayor frecuencia respiratoria por kilogramo de peso y sistema pulmonar en desarrollo).\\n2. **Adultos mayores de 60 años**.\\n3. **Mujeres en estado de embarazo (gestantes)**, por riesgo de bajo peso al nacer o parto pretérmino ante exposiciones prolongadas.\\n4. **Personas con enfermedades respiratorias crónicas:** Asma bronquial, Enfermedad Pulmonar Obstructiva Crónica (EPOC), fibrosis pulmonar, rinitis severa o infecciones respiratorias agudas.\\n5. **Personas con enfermedades cardiovasculares y metabólicas:** Hipertensión arterial no controlada, insuficiencia cardíaca, enfermedad coronaria, arritmias o diabetes mellitus.\\n6. **Personas que trabajan o entrenan intensamente a cielo abierto:** Ciclistas urbanos, corredores de fondo, obreros viales, vendedores informales y agentes de tránsito (debido a que el ejercicio vigoroso multiplica entre 3 y 5 veces el volumen minuto de aire inhalado y promueve respiración bucal que omite el filtrado nasal).\", \"cita\": \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)]\", \"score_semantico\": 0.4191, \"score_hibrido\": 0.4045}], \"citas_obligatorias\": [\"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)]\"]}",
+          "is_error": false,
+          "latency_ms": 4643.2
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "categoria": "Meteorología RAG SIATA (Tool 3)",
+      "pregunta": "Explica cómo influyen la inversión térmica, la capa límite y la topografía del Valle de Aburrá en los episodios críticos de febrero-abril y octubre-noviembre.",
+      "herramientas_esperadas": [
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 3,
+      "pasos_ejecutados": 2,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.63,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📜 Marco Normativo POECA y Recomendaciones Técnicas  **1. Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá — Sección 1. Topografía y Fenómeno de Estabilidad Atmosférica en el Valle de Aburrá — 1.1. Capa Límite Atmosférica e Inversión Térmica** Durante las madrugadas, el enfriamiento radiativ...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La investigación en el Valle de Aburrá ha revelado que las inversiones térmicas, la capa límite y la topografía son cruciales para identificar los eventos más críticos en febrero-abril y octubre-noviembre, ya que",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Explica cómo influyen la inversión térmica, la capa límite y la topografía del Valle de Aburrá en los episodios críticos de febrero-abril y octubre-noviembre.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Explica cómo influyen la inversión térmica, la capa límite y la topografía del Valle de Aburrá en los episodios críticos de febrero-abril y octubre-noviembre.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"SIATA-METEO-RED-2025_027\", \"documento\": \"Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá\", \"doc_code\": \"SIATA-METEO-RED-2025\", \"seccion\": \"Sección 1. Topografía y Fenómeno de Estabilidad Atmosférica en el Valle de Aburrá — 1.1. Capa Límite Atmosférica e Inversión Térmica\", \"contenido\": \"Durante las madrugadas, el enfriamiento radiativo del suelo genera una **inversión térmica superficial**: el aire cercano a la superficie es más frío y denso que el aire superior, impidiendo los movimientos verticales ascendentes (convección). En días soleados despejados, la radiación solar matutina calienta la superficie entre las 09:00 y 11:00 a. m., rompiendo la inversión térmica y expandiendo la **capa límite convectiva** por encima de las crestas montañosas ($> 1,500\\\\text{ m}$ sobre el fondo del valle), permitiendo que los vientos alisios exporten los contaminantes fuera de la cuenca.  \\nPor el contrario, durante las transiciones climáticas (**febrero–abril** y **octubre–noviembre**), capas densas de nubes estratiformes bajas bloquean la radiación solar entrante. La capa límite permanece deprimida por debajo de las montañas circundantes, actuando como una **\\\"tapa meteorológica\\\"** que acumula día tras día el $PM_{2.5}$ emitido en el fondo del valle.\", \"cita\": \"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Sección 1. Topografía y Fenómeno de Estabilidad Atmosférica en el Valle de Aburrá — 1.1. Capa Límite Atmosférica e Inversión Térmica]\", \"score_semantico\": 0.6645, \"score_hibrido\": 0.6772}, {\"chunk_id\": \"AMVA-POECA-2018-2019_002\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 2. Periodos de Gestión de Episodios Críticos\", \"contenido\": \"Dada la transición de la Zona de Confluencia Intertropical (ZCIT) sobre los Andes colombianos, el Valle de Aburrá presenta dos periodos críticos anuales de menor dispersión atmosférica donde se activa preventivamente el seguimiento reforzado del POECA:\\n1. **Primer Periodo de Gestión de Episodios:** Entre **febrero y abril** (históricamente el más intenso por cobertura nubosa persistente y transporte regional de aerosoles por quemas de biomasa en el norte de Suramérica y Orinoquía).\\n2. **Segundo Periodo de Gestión de Episodios:** Entre **octubre y noviembre** (segunda transición a temporada lluviosa con alta humedad relativa y baja radiación solar superficial).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 2. Periodos de Gestión de Episodios Críticos]\", \"score_semantico\": 0.465, \"score_hibrido\": 0.4727}, {\"chunk_id\": \"SIATA-METEO-RED-2025_025\", \"documento\": \"Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá\", \"doc_code\": \"SIATA-METEO-RED-2025\", \"seccion\": \"Disposiciones Generales\", \"contenido\": \"**Fuente Técnica:** Documentación Científica SIATA — Área Metropolitana del Valle de Aburrá (AMVA) y Subsistema SISAIRE (IDEAM)\", \"cita\": \"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Disposiciones Generales]\", \"score_semantico\": 0.5258, \"score_hibrido\": 0.4468}], \"citas_obligatorias\": [\"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Sección 1. Topografía y Fenómeno de Estabilidad Atmosférica en el Valle de Aburrá — 1.1. Capa Límite Atmosférica e Inversión Térmica]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 2. Periodos de Gestión de Episodios Críticos]\", \"[Fuente: Dinámica Atmosférica, Meteorología y Red de Monitoreo del Valle de Aburrá (SIATA-METEO-RED-2025), Disposiciones Generales]\"]}",
+          "is_error": false,
+          "latency_ms": 4627.3
+        },
+        {
+          "step": 2,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q11",
+      "categoria": "Compuesta Datos + RAG (Tools 1+3)",
+      "pregunta": "Consulta cómo estuvo la calidad del aire en Itagüí en la fecha 2024-03-22 y dime qué recomendaciones de salud y deporte al aire libre aplican.",
+      "herramientas_esperadas": [
+        "get_air_quality_data",
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 4,
+      "pasos_ejecutados": 3,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.51,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Itagüí (2024-03-22) - **Estación oficial:** Itagüí (Casa de Justicia - Corredor Sur Industrial) (*Representatividad Poblacional / Industrial-Urbana*) - **Concentración $PM_{2.5}$ (24h):** **`34.0 µg/m³`** (máximo horario `62.0 µg/m³`, media móvil 7 días `32.62 µg/m³`), valor que **cump...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La calidad del aire en Itagüí en la fecha 2024-03-22 fue excelente, con niveles de oxígeno y dióxido de carbono dentro del rango normal para esa época del año. Algun",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Itagüí",
+            "fecha": "2024-03-22"
+          },
+          "observation": "{\"estacion\": \"Itagüí\", \"estacion_oficial\": \"Itagüí (Casa de Justicia - Corredor Sur Industrial)\", \"municipio\": \"Itagüí\", \"tipo_estacion\": \"Representatividad Poblacional / Industrial-Urbana\", \"fecha\": \"2024-03-22\", \"pm25_24h_ugm3\": 34.0, \"pm25_max_horario_ugm3\": 62.0, \"pm25_previo_ugm3\": 29.12, \"media_movil_7d_ugm3\": 32.62, \"ica\": 94.1, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 25.33, \"humedad_relativa_pct\": 53.22, \"velocidad_viento_ms\": 0.36, \"precipitacion_mm\": 0.0, \"periodo_estacional\": \"Gestión Episodios (POECA)\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Itagüí (Casa de Justicia - Corredor Sur Industrial), Fecha 2024-03-22]\"}",
+          "is_error": false,
+          "latency_ms": 4481.7
+        },
+        {
+          "step": 2,
+          "thought": "Buscando en el índice vectorial FAISS los artículos aplicables del Protocolo POECA, Resolución 2254 y guías de salud.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Consulta cómo estuvo la calidad del aire en Itagüí en la fecha 2024-03-22 y dime qué recomendaciones de salud y deporte al aire libre aplican.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Consulta cómo estuvo la calidad del aire en Itagüí en la fecha 2024-03-22 y dime qué recomendaciones de salud y deporte al aire libre aplican.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"MADS-RES-2254-2017_012\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21)\", \"contenido\": \"El Índice de Calidad del Aire (**ICA**) es un indicador adimensional estandarizado entre **0 y 500** que comunica de forma clara el grado de pureza o contaminación atmosférica y sus efectos asociados en la salud humana.\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21)]\", \"score_semantico\": 0.5708, \"score_hibrido\": 0.514}, {\"chunk_id\": \"MADS-RES-2254-2017_011\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)\", \"contenido\": \"La Resolución 2254 de 2017 adopta la norma nacional de calidad del aire ambiente para proteger la salud humana y el bienestar de la población colombiana. Para el material particulado fino **$PM_{2.5}$** (partículas con diámetro aerodinámico menor o igual a $2.5\\\\ \\\\mu m$), los límites máximos permisibles vigentes son:\\n- **Tiempo de exposición de 24 horas (promedio diario):** **$37\\\\ \\\\mu g/m^3$** (vigente desde 2018). Nota técnica: El artículo 3 proyecta una meta normativa más estricta de $25\\\\ \\\\mu g/m^3$ en el horizonte de convergencia hacia las Guías de Calidad del Aire de la OMS.\\n- **Tiempo de exposición anual (promedio aritmético anual):** **$25\\\\ \\\\mu g/m^3$** (con meta objetivo de **$15\\\\ \\\\mu g/m^3$** en el marco del PIGECA y lineamientos nacionales).\\n- Para material particulado respirable **$PM_{10}$**: máximo permisible diario (24 horas) de **$75\\\\ \\\\mu g/m^3$** y anual de **$50\\\\ \\\\mu g/m^3$**.\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)]\", \"score_semantico\": 0.5371, \"score_hibrido\": 0.4739}, {\"chunk_id\": \"SIATA-SALUD-ICA-2024_018\", \"documento\": \"Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA\", \"doc_code\": \"SIATA-SALUD-ICA-2024\", \"seccion\": \"Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)\", \"contenido\": \"Según los lineamientos de salud ambiental del AMVA, SIATA y el Ministerio de Salud, se consideran **Grupos Sensibles** ante episodios de contaminación por $PM_{2.5}$:\\n1. **Niños y niñas menores de 5 años** (debido a su mayor frecuencia respiratoria por kilogramo de peso y sistema pulmonar en desarrollo).\\n2. **Adultos mayores de 60 años**.\\n3. **Mujeres en estado de embarazo (gestantes)**, por riesgo de bajo peso al nacer o parto pretérmino ante exposiciones prolongadas.\\n4. **Personas con enfermedades respiratorias crónicas:** Asma bronquial, Enfermedad Pulmonar Obstructiva Crónica (EPOC), fibrosis pulmonar, rinitis severa o infecciones respiratorias agudas.\\n5. **Personas con enfermedades cardiovasculares y metabólicas:** Hipertensión arterial no controlada, insuficiencia cardíaca, enfermedad coronaria, arritmias o diabetes mellitus.\\n6. **Personas que trabajan o entrenan intensamente a cielo abierto:** Ciclistas urbanos, corredores de fondo, obreros viales, vendedores informales y agentes de tránsito (debido a que el ejercicio vigoroso multiplica entre 3 y 5 veces el volumen minuto de aire inhalado y promueve respiración bucal que omite el filtrado nasal).\", \"cita\": \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)]\", \"score_semantico\": 0.526, \"score_hibrido\": 0.4653}], \"citas_obligatorias\": [\"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo IV. Índice de Calidad del Aire — ICA (Artículos 18 a 21)]\", \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Capítulo I. Niveles Máximos Permisibles de Contaminantes Criterio (Artículo 2)]\", \"[Fuente: Guía de Salud Pública, Grupos Sensibles y Actividad Física según el ICA (SIATA-SALUD-ICA-2024), Sección 2. Identificación de Grupos Sensibles (Población Vulnerable)]\"]}",
+          "is_error": false,
+          "latency_ms": 31.2
+        },
+        {
+          "step": 3,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q12",
+      "categoria": "Compuesta Predicción + RAG (Tools 2+3)",
+      "pregunta": "Pronostica la calidad del aire de mañana en Centro con viento 0.4 m/s, humedad 85% y PM2.5 previo 52.0 ug/m3, e indica qué medidas exige el POECA para fuentes fijas e industrias.",
+      "herramientas_esperadas": [
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 5,
+      "pasos_ejecutados": 4,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 5.78,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Centro (2025-12-31) - **Estación oficial:** Medellín Centro (Tráfico Centro - Museo de Antioquia) (*Tráfico Urbano*) - **Concentración $PM_{2.5}$ (24h):** **`24.61 µg/m³`** (máximo horario `42.0 µg/m³`, media móvil 7 días `24.02 µg/m³`), valor que **cumple el límite máximo diario nacio...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La herramienta \"get_air_quality_data\" se ha utilizado para obtener la calidad del aire en Centro durante la mañana, considerando los parámetros proporcionados. La estimación del air quality es de B1 (Bueno), lo que sugiere que la calidad",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Centro",
+            "fecha": null
+          },
+          "observation": "{\"estacion\": \"Centro\", \"estacion_oficial\": \"Medellín Centro (Tráfico Centro - Museo de Antioquia)\", \"municipio\": \"Medellín\", \"tipo_estacion\": \"Tráfico Urbano\", \"fecha\": \"2025-12-31\", \"pm25_24h_ugm3\": 24.61, \"pm25_max_horario_ugm3\": 42.0, \"pm25_previo_ugm3\": 26.38, \"media_movil_7d_ugm3\": 24.02, \"ica\": 75.6, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 24.16, \"humedad_relativa_pct\": 69.27, \"velocidad_viento_ms\": 1.62, \"precipitacion_mm\": 0.01, \"periodo_estacional\": \"Periodo Regular\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Medellín Centro (Tráfico Centro - Museo de Antioquia), Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 5743.7
+        },
+        {
+          "step": 2,
+          "thought": "Ejecutando el modelo probabilístico clásico Gaussian HMM + Filtro Bayesiano para pronosticar el estado ICA del día siguiente.",
+          "action": "predict_air_quality",
+          "action_input": {
+            "estacion": "Centro",
+            "viento": 0.4,
+            "humedad": 85.0,
+            "pm25_previo": 52.0,
+            "temperatura": 24.16,
+            "precipitacion": 0.0
+          },
+          "observation": "{\"estacion\": \"Centro\", \"modelo\": \"Gaussian HMM + Filtro Bayesiano Dinámico (Implementación Propia en NumPy)\", \"categoria_predicha\": \"Dañina a Grupos Sensibles\", \"color_ica_predicho\": \"Naranja\", \"nivel_poeca_asociado\": \"Estado de Prevención POECA (Nivel I - Grupos Sensibles)\", \"confianza\": 0.9853, \"pm25_estimado_ugm3\": 55.7, \"probabilidades_por_estado\": {\"Buena (Verde)\": 0.0, \"Aceptable (Amarillo)\": 0.0146, \"Dañina a Grupos Sensibles (Naranja)\": 0.9853, \"Dañina a la Salud (Rojo)\": 0.0001}, \"parametros_entrada\": {\"viento_ms\": 0.4, \"humedad_pct\": 85.0, \"pm25_previo_ugm3\": 52.0, \"temperatura_c\": 24.16, \"precipitacion_mm\": 0.0}, \"fuente_modelo\": \"Modelo Probabilístico Parte 1 entrenado con histórico SISAIRE-AMVA (2024)\", \"fuente\": \"[Fuente: Modelo Probabilístico Clásico Propio — Gaussian HMM + Filtro Bayesiano (Parte 1, NumPy), entrenado con histórico SISAIRE-AMVA para Estación Centro]\"}",
+          "is_error": false,
+          "latency_ms": 0.3
+        },
+        {
+          "step": 3,
+          "thought": "Buscando en el índice vectorial FAISS los artículos aplicables del Protocolo POECA, Resolución 2254 y guías de salud.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Pronostica la calidad del aire de mañana en Centro con viento 0.4 m/s, humedad 85% y PM2.5 previo 52.0 ug/m3, e indica qué medidas exige el POECA para fuentes fijas e industrias.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Pronostica la calidad del aire de mañana en Centro con viento 0.4 m/s, humedad 85% y PM2.5 previo 52.0 ug/m3, e indica qué medidas exige el POECA para fuentes fijas e industrias.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.5716, \"score_hibrido\": 0.5359}, {\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.5743, \"score_hibrido\": 0.5279}, {\"chunk_id\": \"AMVA-POECA-2018-2019_007\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones poblacionales** registran promedios móviles de 24 horas de $PM_{2.5}$ iguales o superiores a **$150.5\\\\ \\\\mu g/m^3$** (ICA **$\\\\ge 201$**, color **Púrpura — Muy Dañina** o **Marrón — Peligrosa**).\\n- **Medidas Extraordinarias en Estado de Emergencia:**\\n  1. **Restricción Vehicular Severa:** Restricción de al menos el **50% al 80% del parque automotor** (pares e impares en jornada continua 05:00 a. m. – 10:00 p. m., incluyendo transporte de carga no esencial para abastecimiento alimentario, médico o de servicios públicos vitales).\\n  2. **Paro Industrial Preventivo:** Cese temporal obligatorio de operación de todas las fuentes fijas puntuales emisoras de material particulado ($MP$), dióxido de azufre ($SO_2$) y óxidos de nitrógeno ($NO_x$) clasificadas de impacto moderado y alto en la cuenca del Valle de Aburrá.\\n  3. **Protección Civil y Educativa:** Suspensión de jornada escolar presencial en colegios y universidades, cancelación de eventos masivos o espectáculos públicos al aire libre y alerta hospitalaria en la red de urgencias respiratorias.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)]\", \"score_semantico\": 0.569, \"score_hibrido\": 0.5138}], \"citas_obligatorias\": [\"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)]\"]}",
+          "is_error": false,
+          "latency_ms": 36.9
+        },
+        {
+          "step": 4,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q13",
+      "categoria": "Compuesta Triple Cadena (Tools 1+2+3)",
+      "pregunta": "Consulta cómo estuvo el Centro en la fecha 2024-03-01, pronostica qué pasaría al día siguiente si empeora la ventilación y explica las medidas del POECA aplicables.",
+      "herramientas_esperadas": [
+        "get_air_quality_data",
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "predict_air_quality",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 5,
+      "pasos_ejecutados": 4,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": false,
+      "recuperacion_exitosa": false,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.68,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "### 📍 Estado Observado — Estación Centro (2024-03-01) - **Estación oficial:** Medellín Centro (Tráfico Centro - Museo de Antioquia) (*Tráfico Urbano*) - **Concentración $PM_{2.5}$ (24h):** **`51.22 µg/m³`** (máximo horario `69.0 µg/m³`, media móvil 7 días `41.92 µg/m³`), valor que **supera el límite diario nacional de ...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "El Centro de salud está en constante alerta debido a los datos de calidad del aire que me proporcionaste. Si la ventilación se mantiene bajo control, podría haber un aumento en el nivel de contaminación, lo cual podría afectar la salud de los pacientes",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Centro",
+            "fecha": "2024-03-01"
+          },
+          "observation": "{\"estacion\": \"Centro\", \"estacion_oficial\": \"Medellín Centro (Tráfico Centro - Museo de Antioquia)\", \"municipio\": \"Medellín\", \"tipo_estacion\": \"Tráfico Urbano\", \"fecha\": \"2024-03-01\", \"pm25_24h_ugm3\": 51.22, \"pm25_max_horario_ugm3\": 69.0, \"pm25_previo_ugm3\": 50.65, \"media_movil_7d_ugm3\": 41.92, \"ica\": 138.8, \"categoria_ica\": \"Dañina a Grupos Sensibles\", \"color_ica\": \"Naranja\", \"temperatura_c\": 21.93, \"humedad_relativa_pct\": 71.1, \"velocidad_viento_ms\": 0.69, \"precipitacion_mm\": 0.0, \"periodo_estacional\": \"Gestión Episodios (POECA)\", \"supera_norma_diaria_37ugm3\": true, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación Medellín Centro (Tráfico Centro - Museo de Antioquia), Fecha 2024-03-01]\"}",
+          "is_error": false,
+          "latency_ms": 4644.2
+        },
+        {
+          "step": 2,
+          "thought": "Ejecutando el modelo probabilístico clásico Gaussian HMM + Filtro Bayesiano para pronosticar el estado ICA del día siguiente.",
+          "action": "predict_air_quality",
+          "action_input": {
+            "estacion": "Centro",
+            "viento": 0.4,
+            "humedad": 83.1,
+            "pm25_previo": 64.0,
+            "temperatura": 21.93,
+            "precipitacion": 0.0
+          },
+          "observation": "{\"estacion\": \"Centro\", \"modelo\": \"Gaussian HMM + Filtro Bayesiano Dinámico (Implementación Propia en NumPy)\", \"categoria_predicha\": \"Dañina a Grupos Sensibles\", \"color_ica_predicho\": \"Naranja\", \"nivel_poeca_asociado\": \"Estado de Prevención POECA (Nivel I - Grupos Sensibles)\", \"confianza\": 0.9981, \"pm25_estimado_ugm3\": 67.5, \"probabilidades_por_estado\": {\"Buena (Verde)\": 0.0, \"Aceptable (Amarillo)\": 0.0018, \"Dañina a Grupos Sensibles (Naranja)\": 0.9981, \"Dañina a la Salud (Rojo)\": 0.0001}, \"parametros_entrada\": {\"viento_ms\": 0.4, \"humedad_pct\": 83.1, \"pm25_previo_ugm3\": 64.0, \"temperatura_c\": 21.93, \"precipitacion_mm\": 0.0}, \"fuente_modelo\": \"Modelo Probabilístico Parte 1 entrenado con histórico SISAIRE-AMVA (2024)\", \"fuente\": \"[Fuente: Modelo Probabilístico Clásico Propio — Gaussian HMM + Filtro Bayesiano (Parte 1, NumPy), entrenado con histórico SISAIRE-AMVA para Estación Centro]\"}",
+          "is_error": false,
+          "latency_ms": 0.3
+        },
+        {
+          "step": 3,
+          "thought": "Buscando en el índice vectorial FAISS los artículos aplicables del Protocolo POECA, Resolución 2254 y guías de salud.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Consulta cómo estuvo el Centro en la fecha 2024-03-01, pronostica qué pasaría al día siguiente si empeora la ventilación y explica las medidas del POECA aplicables.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Consulta cómo estuvo el Centro en la fecha 2024-03-01, pronostica qué pasaría al día siguiente si empeora la ventilación y explica las medidas del POECA aplicables.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"AMVA-POECA-2018-2019_005\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** registran concentraciones promedio móvil de 24 horas de $PM_{2.5}$ entre **$37.1\\\\ \\\\mu g/m^3$ y $55.4\\\\ \\\\mu g/m^3$** (ICA **101 a 150**, color **Naranja — Dañina para Grupos Sensibles**) durante al menos cuarenta y ocho (48) horas continuas, o de manera anticipada cuando el modelamiento meteorológico WRF/SIATA proyecta condiciones severas de estabilidad atmosférica por más de 72 horas.\\n- **Medidas Obligatorias en Estado de Prevención:**\\n  1. **Movilidad (Pico y Placa Ambiental Preventivo):** Ampliación de la restricción vehicular para automóviles particulares, camperos y motocicletas de 2 y 4 tiempos (usualmente **6 dígitos por día** en franjas pico 07:00–08:30 y 17:30–19:00, o extensión a sábados alternos según acto administrativo metropolitano). Restricción especial a vehículos de transporte de carga con antigüedad mayor a 10–12 años (modelos anteriores a 2009/2010 sin estándar Euro IV o superior) en horarios pico (07:00–08:30 y 17:30–19:00).\\n  2. **Fuentes Fijas Industriales:** Prohibición estricta de realizar mantenimiento preventivo de sistemas de control de emisiones que implique apagado de filtros de mangas, ciclones o lavadores de gases. Intensificación de visitas de control y seguimiento ambiental por parte del AMVA y Corantioquia.\\n  3. **Actividades Ciudadanas e Institucionales:** Prohibición total de quemas abiertas urbanas y rurales; promoción de trabajo remoto/teletrabajo voluntario, horarios laborales escalonados y uso del transporte público masivo integrado (SITVA: Metro, Tranvía, Metrocable, Metroplús).\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"score_semantico\": 0.4962, \"score_hibrido\": 0.4565}, {\"chunk_id\": \"AMVA-POECA-2018-2019_007\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones poblacionales** registran promedios móviles de 24 horas de $PM_{2.5}$ iguales o superiores a **$150.5\\\\ \\\\mu g/m^3$** (ICA **$\\\\ge 201$**, color **Púrpura — Muy Dañina** o **Marrón — Peligrosa**).\\n- **Medidas Extraordinarias en Estado de Emergencia:**\\n  1. **Restricción Vehicular Severa:** Restricción de al menos el **50% al 80% del parque automotor** (pares e impares en jornada continua 05:00 a. m. – 10:00 p. m., incluyendo transporte de carga no esencial para abastecimiento alimentario, médico o de servicios públicos vitales).\\n  2. **Paro Industrial Preventivo:** Cese temporal obligatorio de operación de todas las fuentes fijas puntuales emisoras de material particulado ($MP$), dióxido de azufre ($SO_2$) y óxidos de nitrógeno ($NO_x$) clasificadas de impacto moderado y alto en la cuenca del Valle de Aburrá.\\n  3. **Protección Civil y Educativa:** Suspensión de jornada escolar presencial en colegios y universidades, cancelación de eventos masivos o espectáculos públicos al aire libre y alerta hospitalaria en la red de urgencias respiratorias.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)]\", \"score_semantico\": 0.5113, \"score_hibrido\": 0.4451}, {\"chunk_id\": \"AMVA-POECA-2018-2019_006\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)\", \"contenido\": \"- **Criterio Técnico de Declaratoria:** Se declara cuando el **50% o más de las estaciones de representatividad poblacional** alcanzan o superan el umbral de **$55.5\\\\ \\\\mu g/m^3$ hasta $150.4\\\\ \\\\mu g/m^3$** de $PM_{2.5}$ en promedio móvil de 24 horas (ICA **151 a 200**, color **Rojo — Dañina a la Salud**) durante 48 horas consecutivas, o ante pronóstico SIATA de persistencia crítica en rojo.\\n- **Medidas Obligatorias en Estado de Alerta:**\\n  1. **Movilidad Estricta (Pico y Placa Ambiental de Alerta):** Restricción de circulación de **6 dígitos diarios en jornada continua (05:00 a. m. a 10:00 p. m.)** incluyendo domingos si el episodio persiste, aplicable a autos particulares, motos de 2T y 4T, y camiones/volquetas. Los vehículos de carga modelos **anteriores o iguales a 2009** tienen restricción ampliada entre las **05:00 a. m. y las 08:30 a. m.** y de **04:30 p. m. a 09:00 p. m.** (o jornada extendida según etiquetado vehicular naranja/rojo).\\n  2. **Fuentes Fijas Industriales:** Suspensión temporal inmediata de operación para calderas y hornos industriales que operen con combustibles sólidos (carbón mineral, biomasa no certificada) o combustibles líquidos pesados (crudo de castilla, fuel oil) cuyas mediciones isocinéticas superen el umbral de contingencia fijado por el AMVA (ej. $> 100\\\\ mg/m^3$ de material particulado o empresas en lista de contingencia sin plan de reducción aprobado).\\n  3. **Educación, Deporte y Sector Público:** Suspensión de actividades físicas y clases de educación física vigorosas al aire libre en instituciones educativas públicas y privadas, jardines infantiles y escenarios abiertos del INDER. Implementación obligatoria de esquemas de teletrabajo y flexibilidad horaria en entidades públicas metropolitanas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\", \"score_semantico\": 0.4897, \"score_hibrido\": 0.4399}], \"citas_obligatorias\": [\"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.2. Estado de Prevención (Nivel I — Umbral Naranja)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.4. Estado de Emergencia (Nivel III — Umbral Púrpura / Marrón)]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 5. Niveles Operacionales de Episodios de Contaminación Atmosférica — Sección 5.3. Estado de Alerta (Nivel II — Umbral Rojo)]\"]}",
+          "is_error": false,
+          "latency_ms": 31.6
+        },
+        {
+          "step": 4,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q14",
+      "categoria": "Resiliencia Error Estación Inválida",
+      "pregunta": "¿Cuál es la concentración actual de PM2.5 en la estación Bogotá y cómo se compara con la red disponible?",
+      "herramientas_esperadas": [
+        "get_air_quality_data"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "get_air_quality_data"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 1,
+      "pasos_ejecutados": 3,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": true,
+      "recuperacion_exitosa": true,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.42,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "⚠️ **Aviso de Validación Operativa:** Durante la consulta se detectó un parámetro fuera de dominio (*Estación 'Bogota' no reconocida en el Valle de Aburrá. Estaciones disponibles: Centro, El Poblado, Aranjuez, Itagüí, Bello.*). El agente replanteó automáticamente la consulta empleando los rangos y estaciones oficiales ...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "La concentración actual de PM2.5 en la estación Bogotá es de 10 microg per metro cúbico, lo que está dentro del rango de confianza establecido para esta medida (10-30 microg per metro",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "Bogota",
+            "fecha": null
+          },
+          "observation": "Error en herramienta: Estación 'Bogota' no reconocida en el Valle de Aburrá. Estaciones disponibles: Centro, El Poblado, Aranjuez, Itagüí, Bello.",
+          "is_error": true,
+          "latency_ms": 4403.3
+        },
+        {
+          "step": 2,
+          "thought": "La consulta previa devolvió error de validación; replanteando estrategia para consultar las estaciones válidas del Valle de Aburrá en la fecha vigente.",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "todas",
+            "fecha": null
+          },
+          "observation": "{\"modo_consulta\": \"Resumen Regional Valle de Aburrá (5 estaciones)\", \"fecha\": \"2025-12-31\", \"estaciones\": [{\"estacion\": \"Centro\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 24.61, \"ica\": 75.6, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 1.62, \"humedad_pct\": 69.27, \"temperatura_c\": 24.16}, {\"estacion\": \"Aranjuez\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 21.0, \"ica\": 68.5, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 3.18, \"humedad_pct\": 74.91, \"temperatura_c\": 22.91}, {\"estacion\": \"Bello\", \"municipio\": \"Bello\", \"pm25_ugm3\": 20.47, \"ica\": 67.5, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 0.97, \"humedad_pct\": 73.72, \"temperatura_c\": 22.41}, {\"estacion\": \"Itagüí\", \"municipio\": \"Itagüí\", \"pm25_ugm3\": 19.13, \"ica\": 64.8, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 0.88, \"humedad_pct\": 63.82, \"temperatura_c\": 23.51}, {\"estacion\": \"El Poblado\", \"municipio\": \"Medellín\", \"pm25_ugm3\": 16.5, \"ica\": 59.7, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"viento_ms\": 0.88, \"humedad_pct\": 73.07, \"temperatura_c\": 20.89}], \"estacion_mas_critica\": \"Centro\", \"pm25_promedio_valle\": 20.34, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Resumen Regional Valle de Aburrá, Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 15.0
+        },
+        {
+          "step": 3,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "categoria": "Resiliencia Error Fecha Fuera de Rango + RAG",
+      "pregunta": "Consulta el registro de El Poblado en la fecha 2029-08-15 y recuérdame cuál es la norma diaria vigente según la Resolución 2254.",
+      "herramientas_esperadas": [
+        "get_air_quality_data",
+        "search_poeca_protocols"
+      ],
+      "herramientas_invocadas": [
+        "get_air_quality_data",
+        "get_air_quality_data",
+        "search_poeca_protocols"
+      ],
+      "tool_calling_correcto": true,
+      "citacion_verificada": true,
+      "num_citas": 4,
+      "pasos_ejecutados": 4,
+      "cumple_tmax": true,
+      "tuvo_error_herramienta": true,
+      "recuperacion_exitosa": true,
+      "resiliencia_ok": true,
+      "exito_global": true,
+      "latencia_seg": 4.89,
+      "backend": "local-hybrid:Qwen2.5-0.5B-Instruct+ReAct",
+      "respuesta_resumen": "⚠️ **Aviso de Validación Operativa:** Durante la consulta se detectó un parámetro fuera de dominio (*La fecha '2029-08-15' está fuera del rango histórico consolidado (2024-01-01 a 2025-12-31).*). El agente replanteó automáticamente la consulta empleando los rangos y estaciones oficiales del Valle de Aburrá (`Centro`, `...",
+      "traza_pasos": [
+        {
+          "step": 1,
+          "thought": "En la consulta realizada, se busca obtener información sobre las condiciones atmosféricas en la estación El Poblado para la fecha especificada (2029-08-15). La herramienta elegida, `get_air_quality_data`, permite",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "El Poblado",
+            "fecha": "2029-08-15"
+          },
+          "observation": "Error en herramienta: La fecha '2029-08-15' está fuera del rango histórico consolidado (2024-01-01 a 2025-12-31).",
+          "is_error": true,
+          "latency_ms": 4843.4
+        },
+        {
+          "step": 2,
+          "thought": "La consulta previa devolvió error de validación; replanteando estrategia para consultar las estaciones válidas del Valle de Aburrá en la fecha vigente.",
+          "action": "get_air_quality_data",
+          "action_input": {
+            "estacion": "El Poblado",
+            "fecha": null
+          },
+          "observation": "{\"estacion\": \"El Poblado\", \"estacion_oficial\": \"El Poblado (I.E. José Félix de Restrepo - Suroriente)\", \"municipio\": \"Medellín\", \"tipo_estacion\": \"Representatividad Poblacional (Residencial)\", \"fecha\": \"2025-12-31\", \"pm25_24h_ugm3\": 16.5, \"pm25_max_horario_ugm3\": 28.79, \"pm25_previo_ugm3\": 15.45, \"media_movil_7d_ugm3\": 16.58, \"ica\": 59.7, \"categoria_ica\": \"Aceptable\", \"color_ica\": \"Amarillo\", \"temperatura_c\": 20.89, \"humedad_relativa_pct\": 73.07, \"velocidad_viento_ms\": 0.88, \"precipitacion_mm\": 0.0, \"periodo_estacional\": \"Periodo Regular\", \"supera_norma_diaria_37ugm3\": false, \"fuente\": \"[Fuente: Datos Abiertos IDEAM-SISAIRE / Red SIATA-AMVA (Recurso g4t8-zkc3), Estación El Poblado (I.E. José Félix de Restrepo - Suroriente), Fecha 2025-12-31]\"}",
+          "is_error": false,
+          "latency_ms": 15.8
+        },
+        {
+          "step": 3,
+          "thought": "Buscando en el índice vectorial FAISS los artículos aplicables del Protocolo POECA, Resolución 2254 y guías de salud.",
+          "action": "search_poeca_protocols",
+          "action_input": {
+            "consulta": "Consulta el registro de El Poblado en la fecha 2029-08-15 y recuérdame cuál es la norma diaria vigente según la Resolución 2254.",
+            "top_k": 3
+          },
+          "observation": "{\"consulta\": \"Consulta el registro de El Poblado en la fecha 2029-08-15 y recuérdame cuál es la norma diaria vigente según la Resolución 2254.\", \"fragmentos_recuperados\": 3, \"resultados\": [{\"chunk_id\": \"MADS-RES-2254-2017_015\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Criterios de Validación de Datos en el SISAIRE / IDEAM\", \"contenido\": \"De acuerdo con el Protocolo para el Monitoreo y Seguimiento de la Calidad del Aire del MADS e IDEAM (Subsistema de Información sobre Calidad del Aire — **SISAIRE**):\\n1. Un promedio diario de 24 horas se considera **válido y representativo** cuando cuenta con al menos el **75% de los registros horarios válidos del día** (mínimo **18 horas válidas** de las 24 horas).\\n2. Las estaciones se clasifican según su entorno en:\\n   - **Estaciones de Tráfico (ej. Tráfico Centro Medellín):** Miden la exposición directa en cañones urbanos de alto flujo vehicular; reflejan picos agudos pero no se emplean de forma aislada sin las estaciones poblacionales para declarar estados metropolitanos generales, aunque sí rigen medidas focalizadas ZUAP.\\n   - **Estaciones de Fondo / Representatividad Poblacional (ej. I.E. José Félix en El Poblado, I.E. Ciro Mendía en Aranjuez, Casa de Justicia en Itagüí, Liceo Fernando Vélez en Bello):** Representan la exposición típica promedio de las comunidades residenciales y mixtas del Valle de Aburrá y constituyen la base jurídica para activar los niveles de Prevención, Alerta y Emergencia del POECA.\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Criterios de Validación de Datos en el SISAIRE / IDEAM]\", \"score_semantico\": 0.5257, \"score_hibrido\": 0.4777}, {\"chunk_id\": \"MADS-RES-2254-2017_010\", \"documento\": \"Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia\", \"doc_code\": \"MADS-RES-2254-2017\", \"seccion\": \"Disposiciones Generales\", \"contenido\": \"**Entidad Emisora:** Ministerio de Ambiente y Desarrollo Sostenible (MADS) — República de Colombia  \\n**Vigencia:** A partir del 1 de enero de 2018 (con metas intermedias a 2030)\", \"cita\": \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Disposiciones Generales]\", \"score_semantico\": 0.5042, \"score_hibrido\": 0.4271}, {\"chunk_id\": \"AMVA-POECA-2018-2019_009\", \"documento\": \"Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA\", \"doc_code\": \"AMVA-POECA-2018-2019\", \"seccion\": \"Artículo 11. Criterio de Levantamiento del Estado Excepcional\", \"contenido\": \"Para disminuir de nivel o levantar un Estado de Prevención, Alerta o Emergencia, el informe técnico del SIATA deberá certificar que más del **50% de las estaciones poblacionales** han retornado a concentraciones inferiores al umbral respectivo durante al menos **48 horas continuas** y que los modelos meteorológicos de mesoescala pronostican condiciones favorables de radiación solar y ventilación en las siguientes 48 horas.\", \"cita\": \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 11. Criterio de Levantamiento del Estado Excepcional]\", \"score_semantico\": 0.5087, \"score_hibrido\": 0.3968}], \"citas_obligatorias\": [\"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Criterios de Validación de Datos en el SISAIRE / IDEAM]\", \"[Fuente: Resolución 2254 de 2017 — Norma de Calidad del Aire e Índice ICA en Colombia (MADS-RES-2254-2017), Disposiciones Generales]\", \"[Fuente: Acuerdo Metropolitano N.° 04 de 2018 y N.° 03 de 2019 — Protocolo POECA (AMVA-POECA-2018-2019), Artículo 11. Criterio de Levantamiento del Estado Excepcional]\"]}",
+          "is_error": false,
+          "latency_ms": 32.0
+        },
+        {
+          "step": 4,
+          "thought": "Integrando hallazgos cuantitativos, predicción probabilística y citas normativas verificadas en la respuesta final.",
+          "action": null,
+          "action_input": null,
+          "observation": null,
+          "is_error": false,
+          "latency_ms": 2.5
+        }
+      ]
+    }
+  ]
+}

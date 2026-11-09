@@ -1,0 +1,123 @@
+[
+  {
+    "id": "Q01",
+    "categoria": "Consulta de Datos (Tool 1)",
+    "pregunta": "¿Cuál fue la concentración de PM2.5, el índice ICA y las condiciones meteorológicas en la estación Centro en la fecha 2024-03-01?",
+    "herramientas_esperadas": ["get_air_quality_data"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q02",
+    "categoria": "Consulta de Datos (Tool 1)",
+    "pregunta": "Consulta cómo está actualmente la calidad del aire y la humedad relativa en la estación El Poblado.",
+    "herramientas_esperadas": ["get_air_quality_data"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q03",
+    "categoria": "Consulta de Datos Regional (Tool 1)",
+    "pregunta": "Compara todas las estaciones del Valle de Aburrá en la fecha 2024-03-18 e indica cuál fue la estación más crítica.",
+    "herramientas_esperadas": ["get_air_quality_data"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q04",
+    "categoria": "Predicción Modelo Clásico (Tool 2)",
+    "pregunta": "Predice la categoría de calidad del aire para mañana en Itagüí si tenemos viento de 0.5 m/s, humedad de 82% y un PM2.5 previo de 41.5 ug/m3.",
+    "herramientas_esperadas": ["predict_air_quality"],
+    "fuentes_esperadas_substr": ["Gaussian HMM"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q05",
+    "categoria": "Predicción Modelo Clásico (Tool 2)",
+    "pregunta": "Usando el modelo clásico, pronostica el estado ICA de mañana en Bello con viento de 2.8 m/s, humedad de 48% y concentración de PM2.5 de 10.5 ug/m3.",
+    "herramientas_esperadas": ["predict_air_quality"],
+    "fuentes_esperadas_substr": ["Gaussian HMM"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q06",
+    "categoria": "Predicción Modelo Clásico (Tool 2)",
+    "pregunta": "Simula qué probabilidad de alerta hay mañana en Aranjuez con viento de 0.9 m/s, humedad de 75% y PM2.5 previo de 36.0 ug/m3.",
+    "herramientas_esperadas": ["predict_air_quality"],
+    "fuentes_esperadas_substr": ["Gaussian HMM"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q07",
+    "categoria": "Normativa RAG POECA (Tool 3)",
+    "pregunta": "¿Cuándo se declara el Estado de Alerta (Nivel II - Rojo) en el protocolo POECA y qué restricciones aplican al Pico y Placa y a los camiones de carga?",
+    "herramientas_esperadas": ["search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["AMVA-POECA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q08",
+    "categoria": "Normativa RAG Resolución 2254 (Tool 3)",
+    "pregunta": "¿Cuál es el límite máximo permisible diario de PM2.5 en Colombia y cuáles son los puntos de corte del ICA según la Resolución 2254 de 2017?",
+    "herramientas_esperadas": ["search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["MADS-RES-2254-2017"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q09",
+    "categoria": "Salud Pública RAG (Tool 3)",
+    "pregunta": "¿Quiénes conforman los grupos sensibles ante episodios de PM2.5 y qué tipo de mascarilla o tapabocas se recomienda usar en niveles Naranja y Rojo?",
+    "herramientas_esperadas": ["search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["SIATA-SALUD-ICA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q10",
+    "categoria": "Meteorología RAG SIATA (Tool 3)",
+    "pregunta": "Explica cómo influyen la inversión térmica, la capa límite y la topografía del Valle de Aburrá en los episodios críticos de febrero-abril y octubre-noviembre.",
+    "herramientas_esperadas": ["search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["SIATA-METEO-RED", "AMVA-POECA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q11",
+    "categoria": "Compuesta Datos + RAG (Tools 1+3)",
+    "pregunta": "Consulta cómo estuvo la calidad del aire en Itagüí en la fecha 2024-03-22 y dime qué recomendaciones de salud y deporte al aire libre aplican.",
+    "herramientas_esperadas": ["get_air_quality_data", "search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE", "SIATA-SALUD-ICA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q12",
+    "categoria": "Compuesta Predicción + RAG (Tools 2+3)",
+    "pregunta": "Pronostica la calidad del aire de mañana en Centro con viento 0.4 m/s, humedad 85% y PM2.5 previo 52.0 ug/m3, e indica qué medidas exige el POECA para fuentes fijas e industrias.",
+    "herramientas_esperadas": ["predict_air_quality", "search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["Gaussian HMM", "AMVA-POECA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q13",
+    "categoria": "Compuesta Triple Cadena (Tools 1+2+3)",
+    "pregunta": "Consulta cómo estuvo el Centro en la fecha 2024-03-01, pronostica qué pasaría al día siguiente si empeora la ventilación y explica las medidas del POECA aplicables.",
+    "herramientas_esperadas": ["get_air_quality_data", "predict_air_quality", "search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE", "Gaussian HMM", "AMVA-POECA"],
+    "evalua_recuperacion_error": false
+  },
+  {
+    "id": "Q14",
+    "categoria": "Resiliencia Error Estación Inválida",
+    "pregunta": "¿Cuál es la concentración actual de PM2.5 en la estación Bogotá y cómo se compara con la red disponible?",
+    "herramientas_esperadas": ["get_air_quality_data"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE"],
+    "evalua_recuperacion_error": true
+  },
+  {
+    "id": "Q15",
+    "categoria": "Resiliencia Error Fecha Fuera de Rango + RAG",
+    "pregunta": "Consulta el registro de El Poblado en la fecha 2029-08-15 y recuérdame cuál es la norma diaria vigente según la Resolución 2254.",
+    "herramientas_esperadas": ["get_air_quality_data", "search_poeca_protocols"],
+    "fuentes_esperadas_substr": ["IDEAM-SISAIRE", "MADS-RES-2254-2017"],
+    "evalua_recuperacion_error": true
+  }
+]
+

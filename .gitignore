@@ -1,0 +1,27 @@
+# Variables de entorno privadas (nunca subir llaves API)
+.env
+.env.*
+!.env.example
+
+# Documentos internos de trabajo / enunciados
+PLAN_DE_TRABAJO.md
+EAFIT_Proyecto_Final_IA.pdf
+
+# Cachés de Python y Jupyter
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Entornos virtuales locales
+.venv/
+venv/
+env/
+
+# Archivos temporales y del sistema operativo
+.DS_Store
+Thumbs.db
+*.log
+
+

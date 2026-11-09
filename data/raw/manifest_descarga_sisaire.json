@@ -1,0 +1,43 @@
+{
+  "fuente_primaria": "Portal de Datos Abiertos de Colombia - IDEAM SISAIRE / AMVA (SIATA)",
+  "endpoint_horario": "https://www.datos.gov.co/resource/g4t8-zkc3.json",
+  "endpoint_anual": "https://www.datos.gov.co/resource/kekd-7v7h.json",
+  "fecha_extraccion_utc": "2026-11-05T22:44:48.962967Z",
+  "rango_temporal": "2024-01-01 a 2025-12-31",
+  "total_registros_horarios_crudos": 775058,
+  "total_registros_horarios_validos": 770527,
+  "total_registros_diarios_consolidados": 3655,
+  "estaciones": [
+    "Centro",
+    "El Poblado",
+    "Aranjuez",
+    "Itagüí",
+    "Bello"
+  ],
+  "conteo_mensual_horario": {
+    "2024-01": 30303,
+    "2024-02": 30629,
+    "2024-03": 30825,
+    "2024-04": 30571,
+    "2024-05": 29010,
+    "2024-06": 25969,
+    "2024-07": 31723,
+    "2024-08": 34702,
+    "2024-09": 30803,
+    "2024-10": 30738,
+    "2024-11": 32466,
+    "2024-12": 35070,
+    "2025-01": 34559,
+    "2025-02": 32071,
+    "2025-03": 35838,
+    "2025-04": 34224,
+    "2025-05": 34020,
+    "2025-06": 21339,
+    "2025-07": 35981,
+    "2025-08": 37742,
+    "2025-09": 36174,
+    "2025-10": 37384,
+    "2025-11": 36588,
+    "2025-12": 26329
+  }
+}
